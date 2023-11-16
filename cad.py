@@ -12,6 +12,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class Ui_MainWindow(object):
+    def __init__(self):
+        self.value = 0;
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(374, 449)
@@ -58,6 +61,7 @@ class Ui_MainWindow(object):
         self.lineEdit_3.setObjectName("lineEdit_3")
         self.gridLayout.addWidget(self.lineEdit_3, 1, 0, 1, 1)
         self.gridLayout_2.addLayout(self.gridLayout, 0, 0, 1, 1)
+     
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
         font = QtGui.QFont()
         font.setFamily("Segoe UI")
@@ -65,14 +69,26 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.pushButton.setFont(font)
-        self.pushButton.setStyleSheet("  background-color:  #a770a7 ;\n"
-" font-weight: bold;    color: white;\n"
-"    border: none;\n"
-"    border-radius: 2px;   padding: 10px;\n"
-"    font-size: 16px;")
+        self.pushButton.setStyleSheet(   
+            "QPushButton {"
+            "   background-color: #a770a7;"
+            "   border: none;"
+            "   border-radius: 2px;"
+            "   padding: 2px;"
+            "   font-size: 16px;"
+            "   color: white"
+            "}"
+            "QPushButton:hover {"
+            "   cursor: pointer;"
+            "   background-color: darkblue;" 
+            "}"
+        )
         self.pushButton.setCheckable(False)
         self.pushButton.setChecked(False)
         self.pushButton.setObjectName("pushButton")
+
+        self.pushButton.clicked.connect(self.teste)
+
         self.gridLayout_2.addWidget(self.pushButton, 5, 0, 2, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
@@ -93,3 +109,7 @@ class Ui_MainWindow(object):
         self.label_3.setText(_translate("MainWindow", "Imagem"))
         self.label_2.setText(_translate("MainWindow", "Produto"))
         self.pushButton.setText(_translate("MainWindow", "Submit"))
+
+    def teste(self):
+        self.value += 1
+        print(f"valor: {self.value}")
