@@ -10,9 +10,12 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-
+from model.data.data_connect import DataConnect
 
 class Ui_MainWindow(object):
+    def __init__(self):
+        self.requestData = DataConnect
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(684, 510)
@@ -130,8 +133,10 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
+		
+        self.pushButton.clicked.connect(self.handlerLogin(self.lineEdit, self.lineEdit_2))
+		
         MainWindow.setStatusBar(self.statusbar)
-
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -142,3 +147,9 @@ class Ui_MainWindow(object):
         self.label_2.setText(_translate("MainWindow", "Password"))
         self.label.setText(_translate("MainWindow", "Username"))
         self.pushButton.setText(_translate("MainWindow", "Sign In"))
+
+    def handlerLogin(self, name: str, age: int):
+        self.requestData.create_user(self, name, age)
+
+
+	
