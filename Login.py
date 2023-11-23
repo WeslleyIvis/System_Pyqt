@@ -13,9 +13,6 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from model.data.data_connect import DataConnect
 
 class Ui_MainWindow(object):
-    def __init__(self):
-        self.requestData = DataConnect
-
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(684, 510)
@@ -134,7 +131,7 @@ class Ui_MainWindow(object):
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
 		
-        self.pushButton.clicked.connect(self.handlerLogin(self.lineEdit, self.lineEdit_2))
+        self.pushButton.clicked.connect(lambda result: DataConnect().create_user(self.lineEdit.text(), int(self.lineEdit_2.text())))
 		
         MainWindow.setStatusBar(self.statusbar)
         self.retranslateUi(MainWindow)
@@ -149,7 +146,10 @@ class Ui_MainWindow(object):
         self.pushButton.setText(_translate("MainWindow", "Sign In"))
 
     def handlerLogin(self, name: str, age: int):
-        self.requestData.create_user(self, name, age)
+    	self.requestData.create_user(self, name, age)       
+		
+	
+	
 
 
 	
