@@ -1,22 +1,28 @@
-import sqlite3
+import sqlite3, os
+
 
 class DataConnect():
-    def __init__(self):
-        self.connect = sqlite3.connect('database')
+    def __init__(self, data_name: str):
+        self.connect = sqlite3.connect(data_name)
         self.cursor = self.connect.cursor()
         
-    def create_user(self, name: str, age: int):
-        self.cursor.execute(f'INSERT INTO usuarios (nome, idade) VALUES (?, ?)', (name, age))
+    def _create_table(self, name_table: str, columns: list):
+        create_query = f"CREATE TABLE IF NOT EXISTS {name_table} ({', '.join(columns)})"
+
+        self.cursor.execute(create_query)
+
+    def _create_user(self, name_columns: list, values: list, table: str):
+        create_query = f"INSERT INTO {table} ({', '.join(name_columns),}), VALUES ({', '.join(['?']*len(values))})"
+
+        self.cursor.execute(create_query, values)
+    
         self.connect.commit()
-        # self.connect.close()
-        self.select_table('usuarios')
+        self.select_table(table)
 
     def select_table(self, table: str):
         self.cursor.execute(f'SELECT * FROM {table}')
         print(self.cursor.fetchall())
 
-data = DataConnect()
-# data.create_user('Maria', 19)
-# data.select_table('usuarios')
+#data = DataConnect(os.environ.get["DATA_NAME"])
 
 
